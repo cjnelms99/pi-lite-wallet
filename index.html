@@ -1,0 +1,11 @@
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+<script>
+Pi.init({ version: "2.0" });
+Pi.authenticate(['username'], (payment) => {
+  console.log("Incomplete payment:", payment);
+}).then((result) => {
+  alert("Success! Access token: " + result.accessToken);
+}).catch((e) => {
+  alert("Error: " + e.message);
+});
+</script>
