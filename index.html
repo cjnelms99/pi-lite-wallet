@@ -1,14 +1,21 @@
-<script src="https://sdk.minepi.com/pi-sdk.js"></script>
-<script>
-Pi.init({ version: "2.0" });
-Pi.authenticate(['username'], (payment) => {
-  console.log("Incomplete payment:", payment);
-}).then((result) => {
-  alert("Success! Access token: " + result.accessToken);
-}).catch((e) => {
-  alert("Error: " + e.message);
-});
-
-  console.log("Pi SDK loaded:", Pi);
-
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Pi SDK</title>
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script>
+    window.onload = () => {
+      console.log("Pi SDK loaded:", Pi);
+      try {
+        Pi.init({ version: "2.0" });
+        console.log("Pi.init complete");
+      } catch (e) {
+        console.log("Pi.init error:", e.message);
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>SDK Test</h2>
+</body>
+</html>
