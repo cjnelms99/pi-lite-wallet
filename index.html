@@ -16,6 +16,20 @@
   </script>
 </head>
 <body>
-  <h2>SDK Test</h2>
+  <div id="status"></div>
+  <script>
+    function log(msg) {
+      document.getElementById('status').innerText += msg + '\n';
+    }
+
+    log("🧪 Pi SDK Test Starting...");
+
+    try {
+      Pi.init({ version: "2.0" });
+      log("✅ Pi.init completed");
+    } catch (e) {
+      log("❌ Pi.init failed: " + e.message);
+    }
+  </script>
 </body>
 </html>
