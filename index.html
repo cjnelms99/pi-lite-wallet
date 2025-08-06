@@ -35,7 +35,7 @@
     const token = encodeURIComponent(result.accessToken);
     
     // Redirect to iOS Shortcut callback URL with token
-    window.location.href = `shortcuts://run-shortcut?name=ReceivePiToken&input=${token}`;
+    window.location.href = `shortcuts://run-shortcut?name=PiLiteWallet&input=${token}`;
   } catch (err) {
     log("❌ Auth Failed: " + err.message);
   }
