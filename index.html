@@ -24,20 +24,22 @@
     };
 
     async function startAuth() {
-      log("🔐 Starting authentication...");
-      try {
-        const scopes = ['username', 'payments'];
-        const result = await Pi.authenticate(scopes, function onIncompletePayment(paymentId) {
-          log("⚠️ Incomplete Payment ID: " + paymentId);
-        });
+  log("🔐 Starting authentication...");
+  try {
+    const scopes = ['username', 'payments'];
+    const result = await Pi.authenticate(scopes, function onIncompletePayment(paymentId) {
+      log("⚠️ Incomplete Payment ID: " + paymentId);
+    });
 
-        log("✅ Auth Success!");
-        log("🧠 Username: " + result.user.username);
-        log("🪪 Access Token: " + result.accessToken);
-      } catch (err) {
-        log("❌ Auth Failed: " + err.message);
-      }
-    }
+    log("✅ Auth Success!");
+    const token = encodeURIComponent(result.accessToken);
+    
+    // Redirect to iOS Shortcut callback URL with token
+    window.location.href = `shortcuts://run-shortcut?name=ReceivePiToken&input=${token}`;
+  } catch (err) {
+    log("❌ Auth Failed: " + err.message);
+  }
+}
   </script>
 </body>
 </html>
