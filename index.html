@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Test Pi SDK</title>
+  <title>Pi Auth</title>
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <script>
-    window.onload = () => {
-      console.log("Pi SDK loaded:", Pi);
-      try {
-        Pi.init({ version: "2.0" });
-        console.log("Pi.init complete");
-      } catch (e) {
-        console.log("Pi.init error:", e.message);
-      }
-    }
-  </script>
 </head>
 <body>
-  <div id="status"></div>
+  <h2>Pi Auth Test</h2>
+  <button onclick="startAuth()">Authenticate</button>
+  <pre id="log">Waiting for auth...</pre>
+
   <script>
     function log(msg) {
-      document.getElementById('status').innerText += msg + '\n';
+      document.getElementById('log').innerText += '\n' + msg;
     }
 
-    log("🧪 Pi SDK Test Starting...");
+    window.onload = () => {
+      try {
+        Pi.init({ version: "2.0" });
+        log("✅ Pi.init complete.");
+      } catch (e) {
+        log("❌ Pi.init error: " + e.message);
+      }
+    };
 
-    try {
-      Pi.init({ version: "2.0" });
-      log("✅ Pi.init completed");
-    } catch (e) {
-      log("❌ Pi.init failed: " + e.message);
+    async function startAuth() {
+      log("🔐 Starting authentication...");
+      try {
+        const scopes = ['username', 'payments'];
+        const result = await Pi.authenticate(scopes, function onIncompletePayment(paymentId) {
+          log("⚠️ Incomplete Payment ID: " + paymentId);
+        });
+
+        log("✅ Auth Success!");
+        log("🧠 Username: " + result.user.username);
+        log("🪪 Access Token: " + result.accessToken);
+      } catch (err) {
+        log("❌ Auth Failed: " + err.message);
+      }
     }
   </script>
 </body>
